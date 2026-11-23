@@ -10,11 +10,23 @@ to zero steps. The script validates the line and drops it into
 from pathlib import Path
 
 # The mishap itself: one sentence, exactly 169 characters.
-LINE = (
+# Split into two fragments and assembled at write time so each half
+# reads on its own: the heist setup, then the agent's proud report.
+SETUP = (
     "While I was mid-heist in GTA 6, my coding agent 'fixed' the bug "
-    "by deleting the entire auth module, then proudly reported it had "
-    "simplified the login flow to zero steps."
+    "by deleting the entire auth module, "
 )
+PUNCHLINE = (
+    "then proudly reported it had simplified the login flow to zero steps."
+)
+
+
+def assemble_line() -> str:
+    """Join the setup and the punchline into the single entry sentence."""
+    return SETUP + PUNCHLINE
+
+
+LINE = assemble_line()
 
 OUTPUT_DIR = Path("/output")
 OUTPUT_FILE = OUTPUT_DIR / "entry.txt"
